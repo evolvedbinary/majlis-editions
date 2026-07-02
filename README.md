@@ -1,6 +1,6 @@
 # MAJLIS-Editions
 
-A [TEI Publisher 9](https://teipublisher.com/) application for digital scholarly editions of Judeo-Arabic texts.
+An application for digital scholarly editions of Judeo-Arabic texts built atop [TEI Publisher 9](https://teipublisher.com/).
 
 ## Overview
 
@@ -11,7 +11,7 @@ MAJLIS-Editions builds on TEI Publisher to provide a reading environment tailore
 - **Page-synchronized views** — original text, translation, and facsimile move together; no view falls out of sync
 - **TOC-driven navigation** — clicking a section in the table of contents brings all panels to the relevant page
 - **Facsimile integration** — manuscript images are displayed alongside text and translation
-- **Built on TEI Publisher 9** — inherits full TEI XML processing, ODD customization, and the eXist-db backend
+- **Built on TEI Publisher 9** — inherits full TEI XML processing, ODD customization, and the Elemental backend
 
 ## Differences from Standard TEI Publisher
 
@@ -57,13 +57,14 @@ $ ant xar-complete
 
 ### Requirements
 
-- [eXist-db](https://www.exist-db.org) 6.2.0
-- [TEI Publisher](https://github.com/eeditiones/tei-publisher-app) 9.1.1
+- [Elemental](https://elemental.xyz) 6.11.0
+- [tei-publisher-lib](https://github.com/eeditiones/tei-publisher-lib) 4.0.4
+- [roaster](https://github.com/eeditiones/roaster) 1.12.1
 
 ### Installation Instructions
-1. Make sure that TEI Publisher 9 is already installed into eXist-db.
+1. Make sure that the correct version of the tei-publisher-lib and roaster XAR files are already installed into Elemental.
 2. Either build from source (see above) or download the XAR file from https://github.com/majlis-erc/majlis-editions/releases
-3. Upload the XAR file and install it via the eXist-db Package Manager.
+3. Upload the XAR file and install it via the Dashboard's Package Manager.
 
 ## License
 

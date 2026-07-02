@@ -1,10 +1,11 @@
 <package xmlns="http://expath.org/ns/pkg" spec="1.0" version="0.0.1" name="https://jalit.org/majlis-editions" abbrev="majlis-editions">
     <title>MAJLIS Editions</title>
 
+    <dependency processor="http://elemental.xyz" semver-min="6.11.0"/>
     <dependency processor="http://exist-db.org" semver-min="6.2.0"/>
 
-    <dependency package="http://exist-db.org/html-templating" semver="1"/>
-    <dependency package="http://existsolutions.com/apps/tei-publisher-lib" semver-min="4.0.0" semver-max="7.0.0"/>
-    <dependency package="http://e-editiones.org/roaster" semver="1"/>
+    <dependency package="http://exist-db.org/html-templating" version="1.2.1"/>
+    <dependency package="http://existsolutions.com/apps/tei-publisher-lib" version="4.0.4"/>
+    <dependency package="http://e-editiones.org/roaster" version="1.12.1"/>
 
 </package>
