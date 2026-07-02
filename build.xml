@@ -12,7 +12,7 @@
     <property name="fore.dir" value="${basedir}/node_modules/@jinntec/fore/dist"/>
 
     <target name="clean">
-        <delete dir="${build}"/>
+        <delete dir="${build.dir}"/>
         <delete dir="resources/scripts" includes="*.js *.map"/>
         <delete dir="resources/images/leaflet"/>
         <delete dir="resources/images/openseadragon"/>
