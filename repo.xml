@@ -2,8 +2,8 @@
     <description>MAJLIS Editions</description>
     <author/>
     <status>beta</status>
-    <license>GNU-LGPL</license>
-    <copyright>true</copyright>
+    <license>GPL-3.0-only</license>
+    <copyright>Copyright 2026 Institut für den Nahen und Mittleren Osten, Ludwig-Maximilians-Universität München</copyright>
     <type>application</type>
     <prepare>pre-install.xql</prepare>
     <finish>post-install.xql</finish>

@@ -1,5 +1,7 @@
 # MAJLIS-Editions
 
+[![License](https://img.shields.io/badge/license-GPL%203.0%20only-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
+
 An application for digital scholarly editions of Judeo-Arabic texts built atop [TEI Publisher 9](https://teipublisher.com/).
 
 ## Overview
@@ -66,6 +68,3 @@ $ ant xar-complete
 2. Either build from source (see above) or download the XAR file from https://github.com/majlis-erc/majlis-editions/releases
 3. Upload the XAR file and install it via the Dashboard's Package Manager.
 
-## License
-
-[GPL 3.0](http://www.gnu.org/licenses/gpl-3.0.html).
