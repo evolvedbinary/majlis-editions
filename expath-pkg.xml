@@ -1,4 +1,4 @@
-<package xmlns="http://expath.org/ns/pkg" spec="1.0" version="0.1" name="https://jalit.org/majlis-editions" abbrev="majlis-editions">
+<package xmlns="http://expath.org/ns/pkg" spec="1.0" version="0.0.1" name="https://jalit.org/majlis-editions" abbrev="majlis-editions">
     <title>MAJLIS Editions</title>
 
     <dependency processor="http://exist-db.org" semver-min="6.2.0"/>
