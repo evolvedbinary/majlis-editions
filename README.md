@@ -68,4 +68,4 @@ $ ant xar-complete
 
 ## License
 
-[MIT](LICENSE) — TEI Publisher itself is licensed under LGPL.
+[GPL 3.0](LICENSE) — TEI Publisher itself is licensed under GPL 3.0.
