@@ -23,17 +23,47 @@ Most TEI Publisher applications navigate by structural division (chapters, secti
 
 This makes it better suited to text–translation–image work where the manuscript page is the primary unit of reference.
 
-## Requirements
+## Building from Source Code
 
-- [eXist-db](https://exist-db.org/) 6.2
-- TEI Publisher 9
+### Requirements
 
-## Installation
+* Apache Ant 1.10.5
+* Java JDK 8
+* Node.js 24
 
-1. Download the code to your computer.
-2. Generate a .xar file.
-3. Upload and install it via the eXist-db Package Manager.
-4. TEI Publisher 9 must already be installed as a dependency.
+All of the above need to be installed and available on the system PATH.
+
+### Build Instructions
+
+1. Clone the repository if you have not previously done so and enter its directory:
+```shell
+$ git clone https://github.com/evolvedbinary/majlis-editions.git
+$ cd majlis-editions
+```
+
+2. or, if you have previously cloned the repository, make sure it is up to date
+```shell
+$ cd majlis-editions
+$ git pull
+```
+
+3. Build the source code with Ant:
+```
+$ ant xar-complete
+```
+
+
+## Installing
+
+### Requirements
+
+- [eXist-db](https://www.exist-db.org) 6.2.0
+- [TEI Publisher](https://github.com/eeditiones/tei-publisher-app) 9.1.1
+
+### Installation Instructions
+1. Make sure that TEI Publisher 9 is already installed into eXist-db.
+2. Either build from source (see above) or download the XAR file from https://github.com/majlis-erc/majlis-editions/releases
+3. Upload the XAR file and install it via the eXist-db Package Manager.
 
 ## License
 
