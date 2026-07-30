@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.jalit</groupId>
+    <artifactId>majlis-editions</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>MAJLIS Editions</name>
+    <description>MAJLIS Editions</description>
+    <url>https://jalit.org/majlis-editions</url>
+    <inceptionYear>2024</inceptionYear>
+
+    <organization>
+        <name>Institut für den Nahen und Mittleren Osten, Ludwig-Maximilians-Universität München</name>
+        <url>https://www.naher-osten.uni-muenchen.de/</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Maximilian de Molière</name>
+            <organization>Institut für den Nahen und Mittleren Osten, Ludwig-Maximilians-Universität München</organization>
+            <organizationUrl>https://www.naher-osten.uni-muenchen.de/</organizationUrl>
+        </developer>
+        <developer>
+            <name>Adam Retter</name>
+            <organization>Evolved Binary</organization>
+            <email>adam@evolvedbinary.com</email>
+            <organizationUrl>https://www.evolvedbinary.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Younes Bahloul</name>
+            <organization>Evolved Binary</organization>
+            <email>younes@evolvedbinary.com</email>
+            <organizationUrl>https://www.evolvedbinary.com</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/jalit-org/majlis-editions.git</connection>
+        <developerConnection>scm:git:https://github.com/jalit-org/majlis-editions.git</developerConnection>
+        <url>https://github.com/jalit-org/majlis-editions</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>GNU General Public License, version 3.0 only</name>
+            <url>https://opensource.org/licenses/GPL-3.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- EXPath -->
+        <package-title>${project.name}</package-title>
+        <package-name>https://jalit.org/majlis-editions</package-name>
+        <package-abbrev>${project.artifactId}</package-abbrev>
+        <package-final-name>${project.artifactId}-${project.version}</package-final-name>
+
+        <!-- node_modules source dirs -->
+        <pb.components>node_modules/@teipublisher/pb-components</pb.components>
+        <scripts.dir>${pb.components}/dist</scripts.dir>
+        <fore.dir>node_modules/@jinntec/fore/dist</fore.dir>
+        <fore.resources>node_modules/@jinntec/fore/resources</fore.resources>
+        <pb.images>${pb.components}/images</pb.images>
+        <pb.css>${pb.components}/css</pb.css>
+        <pb.lib>${pb.components}/lib</pb.lib>
+        <pb.i18n>${pb.components}/i18n/common</pb.i18n>
+
+    </properties>
+
+    <build>
+
+        <resources>
+            <resource>
+                <directory>src/main/xar-resources</directory>
+                <filtering>false</filtering>
+                <targetPath>xar-resources</targetPath>
+            </resource>
+        </resources>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.3.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.6.2</version>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>[11,)</version>
+                                </requireJavaVersion>
+                                <requireMavenVersion>
+                                    <version>[3.9.0,)</version>
+                                </requireMavenVersion>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.code54.mojo</groupId>
+                <artifactId>buildversion-plugin</artifactId>
+                <version>1.0.3</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>set-properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.15.1</version>
+                <configuration>
+                    <workingDirectory>${project.basedir}</workingDirectory>
+                    <installDirectory>${project.basedir}/.mvn-node</installDirectory>
+                    <nodeVersion>v24.11.0</nodeVersion>
+                    <npmVersion>11.19.0</npmVersion>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install-node-and-npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+                    <execution>
+                        <id>npm-install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+
+                    <execution>
+                        <id>copy-xar-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>copy-scripts</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/xar-resources/resources/scripts</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/${scripts.dir}</directory>
+                                    <includes>
+                                        <include>*.js</include>
+                                        <include>*.map</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${project.basedir}/${fore.dir}</directory>
+                                    <includes>
+                                        <include>*.js</include>
+                                        <include>*.map</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>copy-images</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/xar-resources/resources/images</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/${pb.images}</directory>
+                                    <includes>
+                                        <include>leaflet/*</include>
+                                        <include>openseadragon/*</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>copy-css</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/xar-resources/resources/css</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/${pb.css}</directory>
+                                </resource>
+                                <resource>
+                                    <directory>${project.basedir}/${fore.resources}</directory>
+                                    <includes>
+                                        <include>*.css</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>copy-lib</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/xar-resources/resources/lib</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/${pb.lib}</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>copy-i18n</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/xar-resources/resources/i18n/common</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/${pb.i18n}</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>ro.kuberam.maven.plugins</groupId>
+                <artifactId>kuberam-expath-plugin</artifactId>
+                <version>0.6.3</version>
+                <executions>
+                    <execution>
+                        <id>create-xar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>make-xar</goal>
+                        </goals>
+                        <configuration>
+                            <descriptor>xar-assembly.xml</descriptor>
+                            <finalName>${package-final-name}</finalName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.3.2</version>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>clojars.org</id>
+            <url>https://clojars.org/repo</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>
