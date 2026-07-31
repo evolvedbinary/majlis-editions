@@ -27,9 +27,12 @@ This makes it better suited to text–translation–image work where the manuscr
 
 ### Requirements
 
-* Apache Ant 1.10.5
-* Java JDK 8
-* Node.js 24
+- [Elemental](https://elemental.xyz) 6.11.0
+- [tei-publisher-lib](https://github.com/eeditiones/tei-publisher-lib) 4.0.4
+- [roaster](https://github.com/eeditiones/roaster) 1.12.1
+- Java 11 or newer
+- [Maven](https://maven.apache.org/) 3.9 or newer
+
 
 All of the above need to be installed and available on the system PATH.
 
@@ -47,21 +50,16 @@ $ cd majlis-editions
 $ git pull
 ```
 
-3. Build the source code with Ant:
+3. Build the source code with Maven:
+
+```git
+mvn clean package
 ```
-$ ant xar-complete
-```
+
+The XAR file will be at `target/majlis-editions-0.1.xar`.
 
 
-## Installing
-
-### Requirements
-
-- [Elemental](https://elemental.xyz) 6.11.0
-- [tei-publisher-lib](https://github.com/eeditiones/tei-publisher-lib) 4.0.4
-- [roaster](https://github.com/eeditiones/roaster) 1.12.1
-
-### Installation Instructions
+## Installation Instructions
 1. Make sure that the correct version of the tei-publisher-lib and roaster XAR files are already installed into Elemental.
 2. Either build from source (see above) or download the XAR file from https://github.com/majlis-erc/majlis-editions/releases
 3. Upload the XAR file and install it via the Dashboard's Package Manager.
