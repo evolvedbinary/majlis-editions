@@ -6,25 +6,20 @@
 
     <groupId>org.jalit</groupId>
     <artifactId>majlis-editions</artifactId>
-    <version>0.1</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>MAJLIS Editions</name>
-    <description>eXist-db / TEI Publisher XAR package for MAJLIS Editions</description>
+    <description>MAJLIS Editions</description>
     <url>https://jalit.org/majlis-editions</url>
     <inceptionYear>2024</inceptionYear>
 
     <organization>
-        <name>JALIT</name>
-        <url>https://jalit.org</url>
+        <name>Institut für den Nahen und Mittleren Osten, Ludwig-Maximilians-Universität München</name>
+        <url>https://www.naher-osten.uni-muenchen.de/</url>
     </organization>
 
     <developers>
-        <developer>
-            <name>Winona Salesky</name>
-            <organization>Winona Salesky / Consulting</organization>
-            <url>https://wsalesky.com/</url>
-        </developer>
         <developer>
             <name>Maximilian de Molière</name>
             <organization>Institut für den Nahen und Mittleren Osten, Ludwig-Maximilians-Universität München</organization>
@@ -34,6 +29,12 @@
             <name>Adam Retter</name>
             <organization>Evolved Binary</organization>
             <email>adam@evolvedbinary.com</email>
+            <organizationUrl>https://www.evolvedbinary.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Younes Bahloul</name>
+            <organization>Evolved Binary</organization>
+            <email>younes@evolvedbinary.com</email>
             <organizationUrl>https://www.evolvedbinary.com</organizationUrl>
         </developer>
     </developers>
@@ -55,18 +56,18 @@
         <package-final-name>${project.artifactId}-${project.version}</package-final-name>
 
         <!-- node_modules source dirs -->
-        <scripts.dir>node_modules/@teipublisher/pb-components/dist</scripts.dir>
+        <pb.components>node_modules/@teipublisher/pb-components</pb.components>
+        <scripts.dir>${pb.components}/dist</scripts.dir>
         <fore.dir>node_modules/@jinntec/fore/dist</fore.dir>
         <fore.resources>node_modules/@jinntec/fore/resources</fore.resources>
-        <pb.images>node_modules/@teipublisher/pb-components/images</pb.images>
-        <pb.css>node_modules/@teipublisher/pb-components/css</pb.css>
-        <pb.lib>node_modules/@teipublisher/pb-components/lib</pb.lib>
-        <pb.i18n>node_modules/@teipublisher/pb-components/dist/../i18n/common</pb.i18n>
+        <pb.images>${pb.components}/images</pb.images>
+        <pb.css>${pb.components}/css</pb.css>
+        <pb.lib>${pb.components}/lib</pb.lib>
+        <pb.i18n>${pb.components}/i18n/common</pb.i18n>
 
         <!-- plugin versions -->
         <frontend.plugin.version>1.15.1</frontend.plugin.version>
         <resources.plugin.version>3.3.1</resources.plugin.version>
-        <clean.plugin.version>3.3.2</clean.plugin.version>
     </properties>
 
     <build>
@@ -126,6 +127,37 @@
                         <goals>
                             <goal>set-properties</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${frontend.plugin.version}</version>
+                <configuration>
+                    <workingDirectory>${project.basedir}</workingDirectory>
+                    <installDirectory>${project.basedir}/.mvn-node</installDirectory>
+                    <nodeVersion>v20.18.0</nodeVersion>
+                    <npmVersion>10.8.2</npmVersion>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install-node-and-npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+                    <execution>
+                        <id>npm-install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -253,37 +285,6 @@
             </plugin>
 
             <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <version>${frontend.plugin.version}</version>
-                <configuration>
-                    <workingDirectory>${project.basedir}</workingDirectory>
-                    <installDirectory>${project.basedir}/.mvn-node</installDirectory>
-                    <nodeVersion>v20.18.0</nodeVersion>
-                    <npmVersion>10.8.2</npmVersion>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>install-node-and-npm</id>
-                        <goals>
-                            <goal>install-node-and-npm</goal>
-                        </goals>
-                        <phase>initialize</phase>
-                    </execution>
-                    <execution>
-                        <id>npm-install</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
                 <groupId>ro.kuberam.maven.plugins</groupId>
                 <artifactId>kuberam-expath-plugin</artifactId>
                 <version>0.6.3</version>
@@ -305,7 +306,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>${clean.plugin.version}</version>
+                <version>3.3.2</version>
             </plugin>
 
         </plugins>
