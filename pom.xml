@@ -90,7 +90,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.3.1</version>
+                    <version>3.5.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -100,7 +100,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.6.2</version>
+                <version>3.6.3</version>
                 <executions>
                     <execution>
                         <id>enforce-versions</id>
@@ -123,9 +123,9 @@
             </plugin>
 
             <plugin>
-                <groupId>com.code54.mojo</groupId>
-                <artifactId>buildversion-plugin</artifactId>
-                <version>1.0.3</version>
+                <groupId>com.evolvedbinary.maven.plugins</groupId>
+                <artifactId>buildversion-maven-plugin</artifactId>
+                <version>2.0.0</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>
@@ -139,7 +139,7 @@
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.15.1</version>
+                <version>1.15.4</version>
                 <configuration>
                     <workingDirectory>${project.basedir}</workingDirectory>
                     <installDirectory>${project.basedir}/.mvn-node</installDirectory>
@@ -311,17 +311,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>3.3.2</version>
+                <version>3.5.0</version>
             </plugin>
 
         </plugins>
     </build>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>clojars.org</id>
-            <url>https://clojars.org/repo</url>
-        </pluginRepository>
-    </pluginRepositories>
 
 </project>
