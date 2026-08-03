@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://expath.org/ns/pkg" name="${package-name}" abbrev="${package-abbrev}" version="${project.version}" spec="1.0">
+
+    <title>${package-title}</title>
+    <description>${project.description}</description>
+    <author id="mMoliere">Maximilian de Molière</author>
+    <author id="adamretter">Adam Retter</author>
+    <author id="marmoure">Younes Bahloul</author>
+    <website>${project.url}</website>
+    <license>GPL-3.0-only</license>
+    <copyright>Copyright ${project.inceptionYear} ${project.organization.name}</copyright>
+
+    <type>application</type>
+
+    <status>beta</status>
+
+    <tag>${project.artifactId}</tag>
+    <tag>application</tag>
+    <category id="apps">Applications</category>
+
+    <dependency processor="http://elemental.xyz" semver-min="6.11.0"/>
+    <dependency processor="http://exist-db.org" semver-min="6.2.0"/>
+    <dependency package="http://exist-db.org/html-templating" version="1.2.1"/>
+    <dependency package="http://existsolutions.com/apps/tei-publisher-lib" version="4.0.4"/>
+    <dependency package="http://e-editiones.org/roaster" version="1.12.1"/>
+
+    <target>${package-abbrev}</target>
+
+    <prepare>pre-install.xql</prepare>
+    <finish>post-install.xql</finish>
+
+    <permissions user="ilanot-admin" group="tei" mode="rw-r--r--"/>
+
+    <fileSets>
+        <fileSet>
+            <directory>${project.build.outputDirectory}/xar-resources</directory>
+        </fileSet>
+    </fileSets>
+
+</package>
