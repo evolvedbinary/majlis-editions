@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        jdk: [11,25]
+        jdk: [11, 25]
     runs-on: ${{ matrix.os }}
     needs: build
     steps:
@@ -37,20 +37,11 @@ jobs:
       - name: prep the Image
         run: mvn clean package -Pdocker
 
-      - name: Start Docker Container
-        run: docker run --rm --name majlis-editions -p 8080:8080 -p 8443:8443 --detach majlis-erc/majlis-editions:latest
-
-      - name: Wait for Startup and Package Deployment
-        run: |
-          for i in $(seq 1 60); do
-            HTTP_CODE=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/exist/apps/majlis-editions/Muht-Test-ids.xml?view=page&odd=editions&panels=3.2.1.0.4 || true)
-            echo "Attempt $i: HTTP $HTTP_CODE"
-            if [ "$HTTP_CODE" = "200" ]; then
-              echo "Application is ready"
-              exit 0
-            fi
-            sleep 5
-          done
-          echo "Timed out waiting for application to be ready"
-          docker logs majlis-editions
-          exit 1
+      - name: Run Cypress Integration Tests
+        uses: cypress-io/github-action@v7
+        with:
+          start: docker run --rm --name majlis-editions -p 8080:8080 -p 8443:8443 --detach majlis-erc/majlis-editions:latest
+          wait-on: "http://localhost:8080"
+          spec: 'cypress/e2e/*.cy.js'
+          install-command: 'npm ci'
+          
