@@ -66,8 +66,6 @@
         <tei-publisher-lib.xar.version>4.0.4</tei-publisher-lib.xar.version>
         <roaster.xar.version>1.12.1</roaster.xar.version>
 
-        <public.xar.repo.uri>https://exist-db.org/exist/apps/public-repo</public.xar.repo.uri>
-
         <!-- Docker build output paths -->
         <docker.dir>target/docker</docker.dir>
         <docker.context.dir>target/docker-context</docker.context.dir>
@@ -106,6 +104,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.5.0</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.48.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -176,7 +180,7 @@
                         </goals>
                         <phase>generate-resources</phase>
                         <configuration>
-                            <arguments>install</arguments>
+                            <arguments>ci</arguments>
                         </configuration>
                     </execution>
                 </executions>
@@ -328,7 +332,6 @@
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.5.0</version>
             </plugin>
-
         </plugins>
     </build>
 
@@ -432,7 +435,6 @@
                     <plugin>
                         <groupId>io.fabric8</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
-                        <version>0.48.1</version>
                         <configuration>
                             <verbose>true</verbose>
                             <images>
@@ -473,6 +475,82 @@
                             </execution>
                         </executions>
                     </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>ci</id>
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <name>majlis-erc/majlis-editions:%v</name>
+                                    <registry>ghcr.io</registry>
+                                    <alias>majlis-editions-ci</alias>
+                                    <run>
+                                        <containerNamePattern>majlis-editions-ci</containerNamePattern>
+                                        <ports>
+                                            <port>8080:8080</port>
+                                        </ports>
+                                        <wait>
+                                            <http>
+                                                <url>http://localhost:8080/exist/apps/majlis-editions</url>
+                                                <method>GET</method>
+                                                <status>200..399</status>
+                                            </http>
+                                            <time>120000</time>
+                                        </wait>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>ci-docker-start</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>ci-docker-stop</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                                <configuration>
+                                    <allContainers>true</allContainers>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>1.15.4</version>
+                        <configuration>
+                            <workingDirectory>${project.basedir}</workingDirectory>
+                            <installDirectory>${project.basedir}/.mvn-node</installDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>cypress-run</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run cy:run</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                 </plugins>
             </build>
         </profile>
