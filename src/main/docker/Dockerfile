@@ -1,6 +1,6 @@
 FROM evolvedbinary/elemental:${elemental.version}
 
-# Copy majlis-editions dependencies XAR fiels to Elemental's autodeploy folder
+# Copy majlis-editions dependencies XAR files to Elemental's autodeploy folder
 COPY tei-publisher-lib-${tei-publisher-lib.xar.version}.xar   /elemental/autodeploy/
 COPY roaster-${roaster.xar.version}.xar                        /elemental/autodeploy/
 
